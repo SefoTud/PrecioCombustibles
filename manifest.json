@@ -1,6 +1,6 @@
 {
   "name": "Precio Combustibles",
-  "short_name": "Precio Combustibles",
+  "short_name": "Combustibles",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#121212",
