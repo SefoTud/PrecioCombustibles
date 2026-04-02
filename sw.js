@@ -1,13 +1,13 @@
-const CACHE_NAME = 'gasofa-pro-v1';
+const CACHE_NAME = 'gasofa-pro-cache-v1';
 
 self.addEventListener('install', (event) => {
-    self.skipWaiting();
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-    event.waitUntil(clients.claim());
+  event.waitUntil(clients.claim());
 });
 
 self.addEventListener('fetch', (event) => {
-    // No hacemos nada, dejamos que la app funcione siempre online
+  // No hacemos nada, dejamos que la app funcione online
 });
