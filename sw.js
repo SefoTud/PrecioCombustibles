@@ -1,13 +1,18 @@
-const CACHE_NAME = 'gasofa-pro-cache-v1';
+const CACHE_NAME = 'precio-combustibles-v2';
 
 self.addEventListener('install', (event) => {
-  self.skipWaiting();
+    self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(clients.claim());
+    event.waitUntil(clients.claim());
 });
 
 self.addEventListener('fetch', (event) => {
-  // No hacemos nada, dejamos que la app funcione online
+    // Respondemos a las peticiones para que el navegador nos valide como PWA
+    event.respondWith(
+        fetch(event.request).catch(() => {
+            return new Response("App offline");
+        })
+    );
 });
