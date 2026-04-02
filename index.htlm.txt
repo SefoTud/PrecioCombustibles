@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gasofa Pro</title>
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3206/3206972.png">
+    
+    <style>
+        /* Quitamos todos los márgenes */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Evita que se pueda hacer scroll general */
+            background-color: #121212; /* Color de fondo por si carga lento */
+        }
+        
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* AQUÍ ESTÁ LA MAGIA */
+        iframe {
+            position: absolute;
+            top: -28px; /* Subimos la app 28 píxeles hacia arriba para esconder el cartel */
+            left: 0;
+            width: 100%;
+            height: calc(100% + 28px); /* Hacemos la app más grande para compensar lo que hemos subido */
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="iframe-container">
+        <iframe src="https://script.google.com/macros/s/AKfycbyH0_6gENEO8lFhGbt5eHyywKi7e6b9Rj80HOUreL-c/dev" allow="geolocation"></iframe>
+    </div>
+
+</body>
+</html>
