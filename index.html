@@ -67,33 +67,36 @@
         const installBanner = document.getElementById('installBanner');
         const installBtn = document.getElementById('installBtn');
 
-        // Detectamos si la PWA ya está instalada
+        // Detectamos si la App ya está instalada
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
+        // Si NO está instalada, mostramos el banner directamente (sin esperar al navegador)
         if (!isStandalone) {
+            installBanner.style.display = 'flex';
+
+            // Si el navegador es "amable" (como Chrome), guardamos su evento automático
             window.addEventListener('beforeinstallprompt', (e) => {
-                // Previene que Chrome lance el prompt automático
                 e.preventDefault();
-                // Guarda el evento para usarlo luego
                 deferredPrompt = e;
-                // Muestra nuestro banner manual
-                installBanner.style.display = 'flex';
             });
 
+            // Qué pasa al hacer clic en INSTALAR
             installBtn.addEventListener('click', async () => {
                 if (deferredPrompt) {
-                    // Muestra el prompt oficial de instalación al hacer clic
+                    // Si estamos en Chrome, lanzamos el instalador oficial
                     deferredPrompt.prompt();
-                    // Espera a ver la decisión del usuario
                     const { outcome } = await deferredPrompt.userChoice;
-                    console.log('Resultado:', outcome);
-                    // Oculta el banner
-                    installBanner.style.display = 'none';
+                    if (outcome === 'accepted') {
+                        installBanner.style.display = 'none';
+                    }
                     deferredPrompt = null;
+                } else {
+                    // Si estamos en Brave, Safari o Firefox (Navegadores estrictos)
+                    alert("Tu navegador bloquea las instalaciones automáticas.\n\nPara instalarla ahora mismo:\n1. Toca el menú de tu navegador (los 3 puntitos o el botón de compartir).\n2. Elige 'Instalar aplicación' o 'Añadir a pantalla de inicio'.");
                 }
             });
 
-            // Si la instala, ocultamos el banner
+            // Si detecta que se acaba de instalar, oculta el banner
             window.addEventListener('appinstalled', () => {
                 installBanner.style.display = 'none';
             });
