@@ -3,49 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Precio Combustibles</title>
+    <title>Gasofa Pro</title>
+    
+    <link rel="apple-touch-icon" href="https://img.icons8.com/simple/512/2ecc71/gas-pump.png">
+    <meta name="theme-color" content="#27ae60">
+    
     <link rel="manifest" href="manifest.json">
- <meta name="theme-color" content="#27ae60">
- <script>
-     if ('serviceWorker' in navigator) {
-         navigator.serviceWorker.register('sw.js');
-     }
-     // Lógica del botón de instalar
-        let deferredPrompt;
-        const installBanner = document.getElementById('installBanner');
-        const installBtn = document.getElementById('installBtn');
 
-        // Detectamos si la PWA ya está instalada (en modo standalone)
-        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-
-        if (!isStandalone) {
-            window.addEventListener('beforeinstallprompt', (e) => {
-                // Previene que Chrome móvil lance el prompt automático por suerte
-                e.preventDefault();
-                // Guarda el evento para usarlo luego
-                deferredPrompt = e;
-                // Muestra nuestro banner manual
-                installBanner.style.display = 'flex';
-            });
-
-            installBtn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    // Muestra el prompt oficial de instalación al hacer clic
-                    deferredPrompt.prompt();
-                    // Espera a ver la decisión del usuario
-                    const { outcome } = await deferredPrompt.userChoice;
-                    console.log('User outcome:', outcome);
-                    // Oculta el banner
-                    installBanner.style.display = 'none';
-                    deferredPrompt = null;
-                } else {
-                    // Si el prompt no está listo (muy común en Brave), avisamos
-                    alert("Para instalar, toca los 3 puntitos del navegador (⋮) y elige 'Instalar aplicación' o 'Añadir a pantalla de inicio'. ¡Es rápido!");
-                }
-            });
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
         }
- </script>
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3206/3206972.png">
+    </script>
     
     <style>
         /* Quitamos todos los márgenes */
@@ -64,13 +33,13 @@
             height: 100%;
         }
 
-        /* AQUÍ ESTÁ LA MAGIA */
+        /* AQUÍ AJUSTAMOS EL RECORTE (Pon 0px o -36px según como te quede mejor) */
         iframe {
             position: absolute;
-            top: 0px; /* Subimos la app 28 píxeles hacia arriba para esconder el cartel */
+            top: 0px; 
             left: 0;
             width: 100%;
-            height: calc(100% + 0px); /* Hacemos la app más grande para compensar lo que hemos subido */
+            height: 100%; 
             border: none;
         }
     </style>
@@ -79,14 +48,51 @@
 
     <div class="iframe-container">
         <iframe src="https://script.google.com/macros/s/AKfycbyB-xCUtvticDey4cDwNQWSmne7hFEYa-jhJcuyaQX1leGyNUyHLY9C8EG4pWbdCRpT/exec" allow="geolocation"></iframe>
-        <div id="installBanner" style="position: fixed; bottom: 10px; left: 10px; right: 10px; background: #2c3e50; color: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); display: none; align-items: center; justify-content: space-between; z-index: 9999; font-family: sans-serif; font-size: 14px;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <img src="https://img.icons8.com/simple/192/2ecc71/gas-pump.png" style="width: 40px; height: 40px;">
-                <span>¡Usa <b>Gasofa Pro</b> como una App!<br><small>Menos desvíos, más ahorro.</small></span>
-            </div>
-            <button id="installBtn" style="background: #27ae60; color: #fff; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 12px;">INSTALAR</button>
-        </div>
     </div>
+
+    <div id="installBanner" style="position: fixed; bottom: 10px; left: 10px; right: 10px; background: #2c3e50; color: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); display: none; align-items: center; justify-content: space-between; z-index: 9999; font-family: sans-serif; font-size: 14px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="https://img.icons8.com/simple/192/2ecc71/gas-pump.png" style="width: 40px; height: 40px;">
+            <span>¡Usa <b>Gasofa Pro</b> como una App!<br><small>Menos desvíos, más ahorro.</small></span>
+        </div>
+        <button id="installBtn" style="background: #27ae60; color: #fff; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 12px;">INSTALAR</button>
+    </div>
+
+    <script>
+        let deferredPrompt;
+        const installBanner = document.getElementById('installBanner');
+        const installBtn = document.getElementById('installBtn');
+
+        // Detectamos si la PWA ya está instalada (en modo standalone)
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+        if (!isStandalone) {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                // Previene que Chrome móvil lance el prompt automático
+                e.preventDefault();
+                // Guarda el evento para usarlo luego
+                deferredPrompt = e;
+                // Muestra nuestro banner manual
+                installBanner.style.display = 'flex';
+            });
+
+            installBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    // Muestra el prompt oficial de instalación al hacer clic
+                    deferredPrompt.prompt();
+                    // Espera a ver la decisión del usuario
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('User outcome:', outcome);
+                    // Oculta el banner
+                    installBanner.style.display = 'none';
+                    deferredPrompt = null;
+                } else {
+                    // Si el prompt no está listo, avisamos
+                    alert("Para instalar, toca los 3 puntitos del navegador (⋮) y elige 'Instalar aplicación' o 'Añadir a pantalla principal'. ¡Es rápido!");
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
