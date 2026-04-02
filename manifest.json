@@ -1,16 +1,22 @@
 {
-  "name": "Gasofa Pro",
-  "short_name": "GasofaPro",
+  "name": "Precio Combustibles",
+  "short_name": "Precio Combustibles",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#121212",
   "theme_color": "#27ae60",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3206/3206972.png",
+      "src": "https://img.icons8.com/simple/512/2ecc71/gas-pump.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "https://img.icons8.com/simple/192/2ecc71/gas-pump.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
