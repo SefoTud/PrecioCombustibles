@@ -10,6 +10,40 @@
      if ('serviceWorker' in navigator) {
          navigator.serviceWorker.register('sw.js');
      }
+     // Lógica del botón de instalar
+        let deferredPrompt;
+        const installBanner = document.getElementById('installBanner');
+        const installBtn = document.getElementById('installBtn');
+
+        // Detectamos si la PWA ya está instalada (en modo standalone)
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+        if (!isStandalone) {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                // Previene que Chrome móvil lance el prompt automático por suerte
+                e.preventDefault();
+                // Guarda el evento para usarlo luego
+                deferredPrompt = e;
+                // Muestra nuestro banner manual
+                installBanner.style.display = 'flex';
+            });
+
+            installBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    // Muestra el prompt oficial de instalación al hacer clic
+                    deferredPrompt.prompt();
+                    // Espera a ver la decisión del usuario
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('User outcome:', outcome);
+                    // Oculta el banner
+                    installBanner.style.display = 'none';
+                    deferredPrompt = null;
+                } else {
+                    // Si el prompt no está listo (muy común en Brave), avisamos
+                    alert("Para instalar, toca los 3 puntitos del navegador (⋮) y elige 'Instalar aplicación' o 'Añadir a pantalla de inicio'. ¡Es rápido!");
+                }
+            });
+        }
  </script>
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3206/3206972.png">
     
